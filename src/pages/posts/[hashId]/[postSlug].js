@@ -211,6 +211,7 @@ const PostPage = ({ post }) => {
           </div>
         </section>
         <hr className="mt-20"/>
+        {/* related post */}
         <section className="mt-20">
           <h2 className="font-extrabold text-2xl md:text-3xl mb-8">پست های مشابه</h2>
           <div className="grid grid-cols-6 gap-x-8">
