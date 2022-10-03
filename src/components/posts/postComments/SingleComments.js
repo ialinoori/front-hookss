@@ -3,8 +3,8 @@ import { UserCircleIcon, UserIcon } from "@heroicons/react/outline";
 import React, { useState } from "react";
 import CommentForm from "./CommentForm";
 
-const SingleComments = ({ comment }) => {
-  const [commentValue, setCommentValue] = useState("");
+const SingleComments = ({ comment,postId }) => {
+  
   const [onReplay, setOnReplay] = useState(false);
   return (
     <div className=" border rounded-xl border-gray-500  p-4  mb-8">
@@ -25,7 +25,7 @@ const SingleComments = ({ comment }) => {
           <span className=" text-gray-500 tetx-sm ">
             درحال پاسخ به {comment.writer?.name}
           </span>
-       <CommentForm comment={commentValue} setComment={setCommentValue}/>
+       <CommentForm postId={postId} responseTo={comment._id} setOnReplay={setOnReplay} />
         </div>
       ) : null}
     </div>

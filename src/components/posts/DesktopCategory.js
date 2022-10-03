@@ -10,9 +10,12 @@ import {
   } from "@heroicons/react/outline";
   import { useState } from "react";
   import Link from "next/link";
+import { useRouter } from 'next/router';
 
 const DesktopCategory = ({postCategories}) => {
     const [isOpen, setIsOpen] = useState(true);
+    const {query} = useRouter();
+    console.log(query);
     return (
         <div className="bg-white rounded-3xl overflow-hidden">
         {/* accoirdion header */}
@@ -30,7 +33,7 @@ const DesktopCategory = ({postCategories}) => {
         {/* accordion content */}
         <div className={`${isOpen ? "block" : "hidden"}`}>
           <Link href="/blogs">
-            <a className="block pr-4 py-2 hover:bg-purple-50 mb-1">
+            <a className={`block pr-4 py-2 hover:bg-purple-50 mb-1 ${!query.categorySlug ?"bg-purple-700  text-white":""}`}>
               همه مقالات
             </a>
           </Link>
@@ -39,7 +42,7 @@ const DesktopCategory = ({postCategories}) => {
             return (
               <Link href={`/blogs/${category.englishTitle}`}>
                 <a
-                  className="block pr-4 py-2 hover:bg-purple-100 mb-1"
+                  className={`block pr-4 py-2 hover:bg-purple-200 mb-1 ${query.categorySlug === category.englishTitle ? "bg-purple-700  text-white" : ""}`}
                   key={category._id}
                 >
                   {category.title}

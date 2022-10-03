@@ -11,6 +11,7 @@ import { MdContentCopy } from "react-icons/md";
 import PostList from "@/components/posts/PostList";
 import PostComments from "@/components/posts/postComments";
 import toLocalDate from "@/utils/toLocalDate";
+import Layout from "@/containers/Layout";
 
 const PostPage = ({ post }) => {
   const [copied, setCopied] = useState(false);
@@ -23,7 +24,8 @@ const PostPage = ({ post }) => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <Layout>
+       <div >
       <div className="md:max-w-screen-lg container mx-auto">
         <header className="flex flex-col md:flex-row gap-y-5 md:justify-between md:items-start mb-12  mx-auto max-w-screen-md">
           {/* author data */}
@@ -31,17 +33,17 @@ const PostPage = ({ post }) => {
             <img
               src={post.coverImage}
               className="w-14 h-14 md:w-20 md:h-20 rounded-full ring-2 ring-white"
-              alt={post.author.name}
+              
             />
             <div className="flex flex-col mr-4 justify-between">
               <div>
                 <span className="text-xs px-2 py-1 rounded-xl bg-blue-100 text-blue-600 hover:text-blue-100 hover:bg-blue-600 transition-all duration-300 cursor-pointer">
                   {post.category.title}
                 </span>
-                <span className="ml-2">{post.author.name}</span>
+                <span className="ml-2">علی نوری</span>
               </div>
               <span className="font-normal text-xs hidden md:block">
-                {post.author.biography}
+                web developer
               </span>
               <div className="fomt-normal text-myGray-400 text-sm">
                 <span>
@@ -222,16 +224,23 @@ const PostPage = ({ post }) => {
         <PostComments post={post}/>
       </div>
     </div>
+    </Layout>
+   
   );
 };
 
 export default PostPage;
 
 export async function getServerSideProps(ctx) {
-  const { query } = ctx;
+  const { query,req } = ctx;
   const {
     data: { data },
-  } = await axios.get(`http://localhost:5000/api/posts/${query.postSlug}`);
+  } = await axios.get(`http://localhost:5000/api/posts/${query.postSlug}`,{
+    withCredentials:true,
+    headers:{
+      Cookie:req.headers.cookie || ''
+    }
+  });
   console.log(query);
 
   return {

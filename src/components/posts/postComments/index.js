@@ -4,15 +4,15 @@ import ReplyComment from './ReplyComment';
 import SingleComments from './SingleComments';
 
 const PostComments = ({post}) => {
-    const [commentValue , setCommentValue] = useState("");
+   
     return (
         <div>
-            <h2 className='mb-5 font-bold t'>نظرات</h2>
+            <h2 className='mb-5 font-bold mt-4'>نظرات</h2>
             {post.comments.map((comment,index)=>{
                 return !comment.responseTo && comment.status ===2 && 
                 <React.Fragment key={comment._id}>
-                    <SingleComments comment={comment}/>
-                    <ReplyComment comments={post.comments} parentCommentId={comment._id}/>
+                    <SingleComments comment={comment} postId={post._id}/>
+                    <ReplyComment comments={post.comments} postId={post._id} parentCommentId={comment._id}/>
                  
                 
                 </React.Fragment>
@@ -21,7 +21,7 @@ const PostComments = ({post}) => {
             {/*base comment form */}
             <div className='mt-8'>
                 <span className='font-bold md:text-lg'>ارسال دیدگاه جدید</span>
-                <CommentForm comment={commentValue} setComment={setCommentValue}/>
+                <CommentForm postId={post._id} responseTo={null} />
             </div>
         </div>
     );
